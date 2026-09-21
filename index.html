@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#d4d5c3">
+<title>Brainrot Express — Yamaai line</title>
+<link rel="stylesheet" href="./style.css?v=compact-20260911">
+<link rel="stylesheet" href="./game.css?v=brainrot-1">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
+</head>
+<body>
+<canvas id="scene" aria-label="Interactive miniature Japanese mountain railway. Drag to orbit and scroll to inspect." role="img"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<header>
+ <div class="identity" title="Yamaai — A mountain railway"><span class="seal" lang="ja">山<br>あい</span><div class="wordmark">YAMAAI</div></div>
+ <div class="environment" role="group" aria-label="Environment">
+  <button data-mode="day" aria-pressed="false" aria-label="Clear day" title="Clear day"><span aria-hidden="true">☀</span></button>
+  <button data-mode="evening" class="active" aria-pressed="true" aria-label="Golden evening" title="Golden evening"><span aria-hidden="true">◒</span></button>
+  <button data-mode="rain" aria-pressed="false" aria-label="Rainy dusk" title="Rainy dusk"><span aria-hidden="true">☂</span></button>
+  <button data-mode="night" aria-pressed="false" aria-label="Night" title="Night"><span aria-hidden="true">☾</span></button>
+ </div>
+</header>
+<div id="loading" role="status"><div class="loader-mark">山あい</div><span>Preparing the mountain line</span><i></i></div>
+<div id="error" role="alert" hidden></div>
+<div class="bottom-left"><div class="service"><span class="live-dot"></span><span>LOCAL 07</span><span class="divider">/</span><span id="journey">Along the valley</span></div><div class="hint" id="hint">Drag to explore <span>·</span> Scroll to move closer</div></div>
+<div class="bottom-right">
+ <div id="settings" role="group" aria-label="Scene adjustments" hidden>
+  <label><span>Rain</span><input id="rain" aria-label="Rain intensity" type="range" min="0" max="100" value="0"><output id="rainValue" for="rain">0%</output></label>
+  <label><span>Wind</span><input id="wind" aria-label="Wind strength" type="range" min="0" max="100" value="45"><output id="windValue" for="wind">45%</output></label>
+  <label><span>Train</span><input id="speed" aria-label="Train speed" type="range" min="25" max="180" value="100"><output id="speedValue" for="speed">1×</output></label>
+  <label class="view-picker"><span>View</span><select id="view" aria-label="Camera view"><option value="hero">Hero view</option><option value="night">Moonlit gorge</option><option value="cascade">Cascade</option><option value="station">Station</option><option value="bridge">Bridge</option><option value="train">Train</option><option value="tunnel">Tunnel</option><option value="emergence">Emergence</option><option value="river">River</option><option value="shrine">Shrine</option><option value="lanterns">Lantern detail</option><option value="wide">Diorama</option></select></label>
+ </div>
+ <div class="actions"><button id="home" aria-label="Return to hero view" title="Hero view (H)">↖</button><button id="cinematic" aria-pressed="false" aria-label="Cinematic camera" title="Cinematic camera"><span class="camera-icon" aria-hidden="true"></span></button><button id="pause" aria-pressed="false" aria-label="Pause scene" title="Pause / resume (Space)">Ⅱ</button><button id="tune" aria-label="Adjust scene" aria-controls="settings" aria-expanded="false" title="Adjust scene"><span class="tune-icon" aria-hidden="true">☷</span></button></div>
+</div>
+
+<!-- Brainrot Express: game screens and HUD (game.js). Hidden with ?diorama=1. -->
+<div id="g-lines" aria-hidden="true"></div>
+<div id="g-flash" aria-hidden="true"></div>
+<section id="g-title" class="g-screen" hidden>
+ <div class="g-title-card">
+  <p class="g-kicker">山あい LINE · SHIFT 07 · NOW BOARDING</p>
+  <h1><span>BRAINROT</span><span>EXPRESS</span></h1>
+  <p class="g-tag">Drive the train. Stop on the line. Pick up the brainrot before your shift runs out.</p>
+  <button id="g-play" class="g-big">PLAY 🚃</button>
+  <p id="g-best"></p>
+  <ul class="g-keys">
+   <li><kbd>W</kbd><kbd>↑</kbd> go</li><li><kbd>S</kbd><kbd>↓</kbd> brake</li><li><kbd>Space</kbd> horn</li>
+   <li><kbd>C</kbd> camera</li><li><kbd>P</kbd> pause</li><li><kbd>M</kbd> mute</li>
+  </ul>
+  <ul class="g-rules">
+   <li>🟨 Stop the <b>nose of the train</b> on the glowing line. Closer means more aura.</li>
+   <li>⏱ Every stop buys time. Perfect stops chain a combo.</li>
+   <li>💀 Take a curve too fast and you derail. Watch the limit sign.</li>
+   <li>⚡ Speed orbs only pay out above 90 km/h.</li>
+  </ul>
+  <div class="g-title-foot"><button class="g-mute g-icon" aria-label="Toggle sound">🔊</button><a href="?diorama=1">calm diorama mode</a></div>
+ </div>
+ <div class="g-marquee" aria-hidden="true"><div id="g-roster"></div></div>
+</section>
+<section id="g-hud" class="g-screen" hidden>
+ <div class="g-aura"><small>AURA</small><b id="g-aura">0</b><span id="g-combo">no combo</span></div>
+ <div class="g-clock"><b id="g-clock">1:00</b><span id="g-lap">LAP 1</span>
+  <div class="g-tools"><button id="g-cam-btn" class="g-icon" aria-label="Change camera">🎥</button><button class="g-mute g-icon" aria-label="Toggle sound">🔊</button><button id="g-pause-btn" class="g-icon" aria-label="Pause">⏸</button></div></div>
+ <div class="g-stop"><small>NEXT STOP</small><b id="g-stop-name"></b><span id="g-stop-who"></span><em id="g-stop-dist"></em></div>
+ <div id="g-ruler"><div class="g-ruler-track"><i class="g-zone sloppy"></i><i class="g-zone ok"></i><i class="g-zone great"></i><i class="g-zone perfect"></i><span id="g-ruler-train">🚃</span></div><p id="g-ruler-text"></p></div>
+ <div class="g-speedo">
+  <div id="g-warn">TOO FAST 💀</div>
+  <div id="g-meter"><span>DERAIL</span><i></i></div>
+  <div class="g-speed-row"><div class="g-limit" title="Speed limit"><b id="g-limit">140</b></div><div><b id="g-speed">0</b><small>km/h</small></div></div>
+  <p id="g-ahead"></p>
+ </div>
+ <div class="g-riders"><small>ON BOARD</small><span id="g-riders"></span></div>
+ <div id="g-banner"></div>
+ <div id="g-pops" aria-live="polite"></div>
+ <div class="g-touch">
+  <button id="g-touch-brake" aria-label="Brake">BRAKE</button>
+  <button id="g-touch-horn" aria-label="Horn">📯</button>
+  <button id="g-touch-go" aria-label="Go">GO</button>
+ </div>
+</section>
+<section id="g-pause" class="g-screen g-modal" hidden>
+ <div class="g-card"><h2>PAUSED ⏸</h2><p>touch grass? the train will wait.</p>
+  <button id="g-resume" class="g-big">RESUME</button><div class="g-row"><button id="g-restart">RESTART</button><button id="g-quit">MENU</button></div></div>
+</section>
+<section id="g-results" class="g-screen g-modal" hidden>
+ <div class="g-card"><p class="g-kicker">SHIFT OVER</p><b id="g-final-aura" class="g-final">0</b><small class="g-final-unit">AURA</small>
+  <p id="g-newbest" hidden>NEW BEST 🔥</p><h2 id="g-final-rank"></h2>
+  <div id="g-stats"></div>
+  <button id="g-again" class="g-big">PLAY AGAIN</button><div class="g-row"><button id="g-share">COPY FLEX 📋</button><button id="g-menu">MENU</button></div></div>
+</section>
+<script type="module" src="./main.js?v=brainrot-1"></script>
+</body></html>

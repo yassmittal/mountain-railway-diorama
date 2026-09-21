@@ -1,0 +1,159 @@
+/* Brainrot Express. Meme-caption type (white Impact on a black stroke) over the
+   diorama, with yellow, magenta and cyan for everything that matters. */
+:root{--g-ink:#111;--g-yellow:#ffe14a;--g-pink:#ff2fe0;--g-cyan:#27e6ff;--g-red:#ff3b3b;--g-green:#48f08a;--g-meme:Impact,Haettenschweiler,"Arial Narrow Bold","Arial Black",sans-serif}
+
+/* Game mode hides the diorama's own chrome. */
+body.g-game header,body.g-game .bottom-left,body.g-game .bottom-right{display:none}
+.g-screen{position:fixed;inset:0;z-index:5;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.g-screen button{font-family:var(--g-meme);letter-spacing:.04em;border-radius:14px}
+.meme,.g-screen h1,.g-screen h2,.g-aura b,.g-clock b,.g-speedo b,.pop b,#g-banner b,.g-final{font-family:var(--g-meme);font-weight:400;paint-order:stroke fill;-webkit-text-stroke:.14em var(--g-ink);letter-spacing:.02em}
+
+/* ---- Title -------------------------------------------------------------- */
+#g-title{display:grid;place-items:center;background:radial-gradient(ellipse at 50% 40%,#0000 0,#0008 70%,#000b 100%);overflow:auto;padding:16px 16px 70px}
+.g-title-card{max-width:620px;text-align:center}
+.g-kicker{font-size:11px;letter-spacing:.3em;opacity:.8;margin:0 0 6px}
+#g-title h1{margin:0;line-height:.86;font-size:clamp(58px,15vw,132px);transform:rotate(-3deg);text-shadow:0 8px 0 var(--g-pink),0 14px 30px #0009}
+#g-title h1 span{display:block}
+#g-title h1 span:first-child{color:var(--g-yellow)}
+#g-title h1 span:last-child{color:#fff;animation:g-wobble 2.4s ease-in-out infinite}
+@keyframes g-wobble{50%{transform:rotate(2deg) scale(1.03)}}
+.g-tag{font-size:15px;margin:22px auto 20px;max-width:420px;text-shadow:0 1px 6px #000;line-height:1.4}
+.g-big{display:block;margin:0 auto;border:0;background:var(--g-yellow);color:var(--g-ink);font-size:30px;padding:14px 46px;box-shadow:0 6px 0 #b8940d,0 10px 30px #0008;transition:transform .12s}
+.g-big:hover{background:#fff17f;transform:translateY(-2px) rotate(-1deg)}
+.g-big:active{transform:translateY(4px);box-shadow:0 2px 0 #b8940d}
+#g-play{animation:g-pulse 1.1s ease-in-out infinite}
+@keyframes g-pulse{50%{transform:scale(1.06)}}
+#g-best{font-family:var(--g-meme);font-size:17px;letter-spacing:.06em;color:var(--g-cyan);margin:16px 0 14px;text-shadow:0 2px 0 #000}
+.g-keys,.g-rules{list-style:none;padding:0;margin:0 auto}
+.g-keys{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;font-size:12px;text-shadow:0 1px 4px #000}
+kbd{display:inline-block;min-width:22px;padding:2px 6px;margin-right:3px;border-radius:5px;background:#fff;color:var(--g-ink);font:700 11px/1.3 ui-monospace,monospace;box-shadow:0 2px 0 #999}
+.g-rules{margin-top:16px;display:grid;gap:5px;text-align:left;max-width:470px;font-size:13px;background:#000a;border:1px solid #ffffff22;border-radius:14px;padding:12px 16px;backdrop-filter:blur(8px)}
+.g-rules b{color:var(--g-yellow)}
+.g-title-foot{display:flex;gap:14px;align-items:center;justify-content:center;margin-top:14px;font-size:12px}
+.g-title-foot a{color:#fffc}
+.g-marquee{position:fixed;left:0;right:0;bottom:0;overflow:hidden;background:var(--g-yellow);color:var(--g-ink);padding:9px 0;font-family:var(--g-meme);font-size:18px;letter-spacing:.03em;transform:rotate(-1deg) translateY(4px);box-shadow:0 -4px 20px #0006}
+#g-roster{display:flex;gap:34px;width:max-content;animation:g-marquee 32s linear infinite;white-space:nowrap}
+@keyframes g-marquee{to{transform:translateX(-50%)}}
+.g-icon{width:40px;height:40px;border:0;border-radius:50%!important;background:#000a;color:#fff;font-size:18px;display:grid;place-items:center;padding:0}
+.g-icon:hover{background:#000d}
+
+/* ---- HUD ------------------------------------------------------------------ */
+#g-hud{pointer-events:none}
+#g-hud button{pointer-events:auto}
+.g-aura{position:absolute;top:max(14px,env(safe-area-inset-top));left:max(16px,env(safe-area-inset-left))}
+.g-aura small,.g-stop small,.g-riders small{display:block;font:800 10px/1 -apple-system,sans-serif;letter-spacing:.2em;opacity:.85;text-shadow:0 1px 3px #000}
+.g-aura b{display:block;font-size:44px;line-height:1;color:var(--g-yellow)}
+#g-combo{display:inline-block;margin-top:4px;padding:3px 9px;border-radius:99px;background:#0008;font:800 11px/1.3 -apple-system,sans-serif;opacity:.6}
+#g-combo.hot{opacity:1;background:var(--g-pink);animation:g-pulse .6s ease-in-out infinite}
+.g-clock{position:absolute;top:max(14px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));text-align:right}
+.g-clock b{display:block;font-size:48px;line-height:1}
+.g-clock b.panic{color:var(--g-red);animation:g-pulse .5s ease-in-out infinite}
+#g-lap{display:block;font:800 11px/1.3 -apple-system,sans-serif;letter-spacing:.12em;text-shadow:0 1px 3px #000}
+.g-tools{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+.g-tools .g-icon{width:34px;height:34px;font-size:15px}
+.g-stop{position:absolute;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);text-align:center;background:#000b;border:2px solid var(--g-yellow);border-radius:16px;padding:8px 18px 9px;min-width:230px;box-shadow:0 8px 30px #0006}
+#g-stop-name{display:block;font-family:var(--g-meme);font-size:24px;font-weight:400;letter-spacing:.03em;color:var(--g-yellow)}
+#g-stop-who{display:block;font-size:12px;opacity:.9}
+#g-stop-dist{display:block;font-style:normal;font-family:var(--g-meme);font-size:20px;color:var(--g-cyan);margin-top:2px}
+
+#g-ruler{position:absolute;left:50%;bottom:max(118px,calc(env(safe-area-inset-bottom) + 108px));width:min(560px,calc(100vw - 32px));transform:translate(-50%,20px);opacity:0;transition:opacity .25s,transform .25s}
+#g-ruler.show{opacity:1;transform:translate(-50%,0)}
+.g-ruler-track{position:relative;height:30px;border-radius:99px;background:#000b;border:2px solid #fff3;overflow:visible}
+/* The mark sits at 45/51 of the track (-45 m to +6 m); zones widen around it. */
+.g-zone{position:absolute;top:0;bottom:0;left:calc(88.235% - var(--w));width:calc(var(--w) * 2)}
+.g-zone.sloppy{--w:9.8%;background:#ff3b3b55}.g-zone.ok{--w:5.5%;background:#ffe14a66}.g-zone.great{--w:2.9%;background:#48f08a88}.g-zone.perfect{--w:1.2%;background:#fff}
+#g-ruler-train{position:absolute;top:50%;font-size:22px;transform:translate(-100%,-50%) scaleX(-1);transition:left .05s linear;filter:drop-shadow(0 2px 2px #000)}
+#g-ruler-text{margin:6px 0 0;text-align:center;font-family:var(--g-meme);font-size:18px;letter-spacing:.04em;text-shadow:0 2px 0 #000}
+
+.g-speedo{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));text-align:right}
+.g-speed-row{display:flex;align-items:center;gap:12px;justify-content:flex-end}
+.g-speedo #g-speed{font-size:64px;line-height:.9;display:block}
+.g-speedo small{display:block;font:800 11px/1 -apple-system,sans-serif;letter-spacing:.2em;text-shadow:0 1px 3px #000}
+.g-limit{width:62px;height:62px;border-radius:50%;background:#fff;border:7px solid #e0201b;display:grid;place-items:center;box-shadow:0 4px 12px #0008}
+.g-limit b{font-family:var(--g-meme);font-size:24px;color:#111;-webkit-text-stroke:0;font-weight:400}
+#g-ahead{margin:6px 0 0;min-height:18px;font-family:var(--g-meme);font-size:17px;color:var(--g-yellow);letter-spacing:.04em;text-shadow:0 2px 0 #000}
+#g-warn{font-family:var(--g-meme);font-size:26px;color:var(--g-red);paint-order:stroke fill;-webkit-text-stroke:.14em #000;opacity:0;transform:scale(.8);transition:opacity .15s,transform .15s}
+#g-warn.show{opacity:1;transform:scale(1);animation:g-shake .18s linear infinite}
+@keyframes g-shake{25%{transform:translate(-2px,1px) rotate(-2deg)}75%{transform:translate(2px,-1px) rotate(2deg)}}
+#g-meter{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin:4px 0 8px;opacity:0;transition:opacity .2s}
+#g-meter.show{opacity:1}
+#g-meter span{font:900 10px/1 -apple-system,sans-serif;letter-spacing:.18em;color:var(--g-red);text-shadow:0 1px 2px #000}
+#g-meter::after{content:"";order:2}
+#g-meter i{display:block;height:10px;width:0;max-width:150px;border-radius:99px;background:linear-gradient(90deg,var(--g-yellow),var(--g-red));box-shadow:0 0 0 2px #000a,0 0 12px var(--g-red)}
+#g-meter{--track:150px}
+
+.g-riders{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));max-width:40vw}
+#g-riders{display:block;font-size:26px;line-height:1.1;letter-spacing:2px;filter:drop-shadow(0 2px 3px #000)}
+#g-riders:empty::after{content:"nobody yet 🦗";font-size:13px;opacity:.8}
+
+#g-banner{position:absolute;left:0;right:0;top:32%;text-align:center;opacity:0;pointer-events:none}
+#g-banner.show{animation:g-banner 3.2s ease-out forwards}
+#g-banner b{display:block;font-size:clamp(40px,8vw,72px);color:var(--g-cyan)}
+#g-banner span{display:inline-block;margin-top:4px;padding:4px 12px;border-radius:99px;background:#000b;font-weight:700;font-size:14px}
+@keyframes g-banner{0%{opacity:0;transform:translateX(-40px) skewX(-10deg)}10%,78%{opacity:1;transform:none}100%{opacity:0;transform:translateX(40px)}}
+
+#g-pops{position:absolute;left:0;right:0;top:40%;display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none}
+.pop{text-align:center;animation:g-pop 1.7s cubic-bezier(.2,1.4,.4,1) forwards;transform-origin:center}
+.pop b{display:block;font-size:clamp(34px,6.5vw,58px);line-height:1}
+.pop small{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:99px;background:#000b;font-weight:700;font-size:13px}
+.pop.big b{font-size:clamp(44px,9vw,84px)}
+.pop.small b{font-size:clamp(22px,4vw,30px)}
+.pop.good b{color:var(--g-yellow)}.pop.gain b{color:var(--g-green)}.pop.bad b{color:var(--g-red)}
+.pop.count b{font-size:clamp(80px,18vw,160px);color:var(--g-yellow)}
+@keyframes g-pop{0%{opacity:0;transform:scale(.3) rotate(var(--tilt))}14%{opacity:1;transform:scale(1.12) rotate(var(--tilt))}24%{transform:scale(1) rotate(var(--tilt))}78%{opacity:1}100%{opacity:0;transform:translateY(-50px) rotate(var(--tilt))}}
+
+#g-flash{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0}
+#g-flash.good{background:radial-gradient(circle,#fff0 30%,#ffe14a88);animation:g-flash .5s ease-out}
+#g-flash.bad{background:radial-gradient(circle,#f000 30%,#ff1e1e99);animation:g-flash .7s ease-out}
+@keyframes g-flash{from{opacity:1}to{opacity:0}}
+#g-lines{position:fixed;inset:-10%;z-index:3;pointer-events:none;opacity:0;background:repeating-conic-gradient(from 0deg at 50% 45%,#fff0 0deg,#fff0 5deg,#ffffff38 5.4deg,#fff0 6deg);-webkit-mask:radial-gradient(circle at 50% 45%,#0000 32%,#000 70%);mask:radial-gradient(circle at 50% 45%,#0000 32%,#000 70%);animation:g-lines .25s steps(2) infinite}
+@keyframes g-lines{50%{transform:rotate(1.4deg)}}
+body:not(.g-playing) #g-lines{display:none}
+
+/* Touch driving controls only on coarse pointers. */
+.g-touch{display:none}
+@media(pointer:coarse){
+ .g-touch{display:block}
+ .g-keys{display:none}
+ .g-rules::before{content:"👆 Hold GO to speed up, hold BRAKE to slow down, tap 📯 to honk.";display:block;font-weight:700;margin-bottom:4px}
+ .g-touch button{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));border:0;color:#fff;font-family:var(--g-meme);font-size:26px;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 6px 0 #0008}
+ #g-touch-brake{left:max(14px,env(safe-area-inset-left));width:112px;height:112px;border-radius:50%;background:#e0201bdd}
+ #g-touch-go{right:max(14px,env(safe-area-inset-right));width:112px;height:112px;border-radius:50%;background:#1fbf5bdd}
+ #g-touch-horn{left:50%;transform:translateX(-50%);width:64px;height:64px;border-radius:50%;background:#000b;font-size:28px}
+ .g-touch button.held{transform:translateY(4px);box-shadow:0 2px 0 #0008;filter:brightness(1.2)}
+ #g-touch-horn.held{transform:translate(-50%,4px)}
+ .g-riders{bottom:146px}
+ .g-speedo{bottom:146px}
+ #g-ruler{bottom:246px}
+ .g-tools .g-icon{width:40px;height:40px}
+}
+
+/* ---- Pause / results --------------------------------------------------------- */
+.g-modal{display:grid;place-items:center;background:#000a;backdrop-filter:blur(6px);padding:16px;overflow:auto}
+.g-card{width:min(440px,100%);text-align:center;background:#121418ee;border:2px solid var(--g-yellow);border-radius:22px;padding:24px 22px;box-shadow:0 20px 60px #000a}
+.g-card h2{margin:6px 0 4px;font-size:38px;color:var(--g-yellow)}
+.g-card p{margin:0 0 16px;opacity:.85}
+.g-row{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.g-row button{border:2px solid #fff4;background:#fff1;color:#fff;font-size:18px;padding:10px 18px}
+.g-row button:hover{background:#fff2}
+.g-final{display:block;font-size:84px;line-height:1;color:var(--g-yellow)}
+.g-final-unit{display:block;font-weight:800;letter-spacing:.3em;font-size:12px;margin-bottom:6px}
+#g-newbest{display:inline-block;margin:6px 0 0;padding:4px 12px;border-radius:99px;background:var(--g-pink);font-weight:800;opacity:1;animation:g-pulse .7s ease-in-out infinite}
+#g-final-rank{font-size:34px}
+#g-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 20px}
+#g-stats div{background:#fff1;border-radius:12px;padding:8px 4px}
+#g-stats i{display:block;font-style:normal;font-size:20px}
+#g-stats b{display:block;font-family:var(--g-meme);font-weight:400;font-size:24px}
+#g-stats span{font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+
+@media(max-width:700px){
+ .g-stop{top:auto;bottom:calc(max(18px,env(safe-area-inset-bottom)) + 96px);min-width:0;width:calc(100vw - 32px);padding:6px 12px}
+ #g-stop-name{font-size:20px}
+ .g-aura b{font-size:34px}.g-clock b{font-size:38px}.g-speedo #g-speed{font-size:48px}.g-limit{width:50px;height:50px;border-width:6px}.g-limit b{font-size:19px}
+ #g-ruler{bottom:calc(max(18px,env(safe-area-inset-bottom)) + 190px)}
+}
+@media(max-width:700px) and (pointer:coarse){
+ .g-stop{bottom:calc(max(18px,env(safe-area-inset-bottom)) + 222px)}
+ #g-ruler{bottom:calc(max(18px,env(safe-area-inset-bottom)) + 316px)}
+}
+@media(prefers-reduced-motion:reduce){#g-lines{display:none}#g-title h1 span:last-child,#g-play,.g-marquee #g-roster{animation:none}}
