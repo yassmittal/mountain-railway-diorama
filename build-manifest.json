@@ -1,5 +1,5 @@
 {
-  "buildId": "a6229593f59b5ae1",
+  "buildId": "dcc8d054ee208dbb",
   "three": "0.185.0",
   "files": {
     "architecture.js": "30c292d727e00c2aea3c2393b1123afc35ce12a006892ace03d61866f894ab86",
@@ -11,7 +11,7 @@
     "game.js": "3794454df8a9e21f4384c47b7a83686e28859bed50a44eb712a99ae66390a0d1",
     "geology.js": "4fcf823649b44ecc8b8786dd076320bcc3923daab74d8485d16388628c0100a3",
     "geometry.js": "7d3abc6f10af8a406e9ded6a257aa674c76c03ac1012543d986bdb504d0064b4",
-    "index.html": "352c4f2e8833e64a4a8e6e85d32a80a4cd6bd21a6fd2815f830491b0b4805518",
+    "index.html": "496f712ac1ee094d665f9da586081ab28921145180bdcd160d440f67ae0aae5a",
     "lanterns.js": "2cf3239e9ea6a11ab07896de7d73f4a0b29a8bdba15cede799eb878bc32717cb",
     "luminous.js": "07247b59714c67a64e6dc91fbad1493f9b5463656a14540b53460c984b97a9fc",
     "main.js": "bb68d080bb29746028e5428a388cf8bd29f8c37d8ebbb3053cda5b92c793b986",

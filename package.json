@@ -9,5 +9,10 @@
     "test": "node scripts/verify.mjs",
     "build": "node scripts/build.mjs"
   },
-  "engines": { "node": ">=20.6" }
+  "engines": {
+    "node": ">=20.6"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
 }
